@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "All Users' Bets";
+}
+
+<h2>All Users' Bets</h2>
+
+@if (Model.Count > 0)
+{
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Color</th>
+            <th>Bet Amount</th>
+        </tr>
+        @foreach (var bet in Model)
+        {
+            <tr>
+                <td>@bet.UserId</td>
+                <td>@bet.SelectedColor</td>
+                <td>@bet.BetAmount</td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No bets have been placed yet.</p>
+}

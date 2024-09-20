@@ -1,0 +1,75 @@
+﻿@model List<ColorPickerGame.Models.Bet>
+@{
+    ViewBag.Title = "Color Picker Game";
+
+    Layout = null;
+}
+
+<h2>Color Picker Game - Place Your Bets</h2>
+
+<div class="container">
+    <h3>Select a color and place your bets!</h3>
+
+    <form id="betForm" method="post" action="/ColorPicker/SubmitBets">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <h4>User @(i + 1) - Current Balance: @Model[i].Balance</h4>
+            <div class="user-bet">
+                <div class="color-selection">
+                    @foreach (var color in (string[])ViewBag.Colors)
+                    {
+                        <div>
+                            <input type="radio" id="user_i_color_@color" name="bets[@i].SelectedColor" value="@color" />
+                            <label for="user_i_color_@color">@color</label>
+                        </div>
+                    }
+                </div>
+                <label for="user_i_betAmount">Enter your bet (optional):</label>
+                <input type="number" id="user_i_betAmount" name="bets[@i].BetAmount" min="0" max="@Model[i].Balance" />
+                <input type="hidden" name="bets[@i].Balance" value="@Model[i].Balance" />
+            </div>
+        }
+
+        <!-- Submit button to place the bet -->
+        <button type="submit" id="submitBets">Submit Bet</button>
+    </form>
+</div>
+
+<!-- Optional Result Section -->
+@if (TempData["Result"] != null)
+{
+    <p id="result">@Html.Raw(TempData["Result"])</p>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Optional JS here
+        });
+    </script>
+}
+
+<style>
+    .container {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .user-bet {
+        margin-bottom: 20px;
+        text-align: left;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 10px 0;
+    }
+
+    .color-selection {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+    }
+
+        .color-selection div {
+            margin: 0 10px;
+        }
+</style>
